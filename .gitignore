@@ -1,0 +1,18 @@
+/WebRoot/WEB-INF/classes
+lib
+
+# Maven #
+target/
+
+# IDEA #
+.idea/
+*.iml
+out/
+
+# Eclipse #
+.settings/
+.classpath
+.myeclipse
+.project
+.mymetadata
+

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+			<constant name="struts.i18n.encoding" value="utf-8"></constant>
+			<constant name="struts.devMode" value="false"></constant>
+			<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+			<constant name="struts.ui.theme" value="simple" />
+
+			<package name="abstract" extends="struts-default">
+						<interceptors>
+									<interceptor name="pagerInter"
+												class="com.sys.interceptor.PagerInterceptor">
+									</interceptor>
+									<interceptor-stack name="baseInter">
+												<interceptor-ref name="defaultStack"></interceptor-ref>
+												<interceptor-ref name="pagerInter"></interceptor-ref>
+									</interceptor-stack>
+						</interceptors>
+						<default-interceptor-ref name="baseInter"></default-interceptor-ref>
+						<global-results>
+									<result name="add_success">/control/common/add_success.jsp</result>
+									<result name="del_success">/control/common/del_success.jsp</result>
+									<result name="update_success">/control/common/update_success.jsp</result>
+									<result name="runtimeException">/control/common/error.jsp</result>
+									<result name="login">/control/login.jsp</result>
+									<result name="input">/control/common/input.jsp</result>
+						</global-results>
+						<global-exception-mappings>
+									<exception-mapping result="runtimeException"
+												exception="java.lang.RuntimeException"></exception-mapping>
+						</global-exception-mappings>
+			</package>
+			<package name="privilege" namespace="/control/privilege"
+						extends="abstract">
+						<action name="employee" class="employeeAction">
+									<result name="login_success" type="redirect">/control/index.jsp
+									</result>
+									<result name="login_fail">/control/login.jsp</result>
+									<result name="input">/control/privilege/employee_input.jsp
+									</result>
+									<result name="success">/control/privilege/employee_list.jsp
+									</result>
+									<result name="select">/control/privilege/selectEmployee_list.jsp
+									</result>
+						</action>
+			</package>
+
+			<package name="school" namespace="/control/school"
+					 extends="abstract">
+				<action name="*" class="{1}Action">
+					<result name="input">/control/school/{1}_input.jsp
+					</result>
+					<result name="success">/control/school/{1}_list.jsp
+					</result>
+				</action>
+			</package>
+
+			<package name="front" namespace="/front"
+					 extends="struts-default">
+				<interceptors>
+					<interceptor name="pagerInter"
+								 class="com.sys.interceptor.PagerInterceptor">
+					</interceptor>
+					<interceptor-stack name="baseInter">
+						<interceptor-ref name="defaultStack"></interceptor-ref>
+						<interceptor-ref name="pagerInter"></interceptor-ref>
+					</interceptor-stack>
+				</interceptors>
+				<default-interceptor-ref name="baseInter"></default-interceptor-ref>
+				<action name="student" class="frontAction">
+					<result name="register">/front/register.jsp
+					</result>
+					<result name="contact">/front/contact.jsp
+					</result>
+					<result name="index">/front/main.jsp
+					</result>
+					<result name="comment">/front/comment.jsp
+					</result>
+					<result name="addComment" type="redirectAction">student!commentList</result>
+				</action>
+			</package>
+
+</struts>    
